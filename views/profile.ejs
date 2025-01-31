@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 p-10 flex flex-col items-center ">
+            <div class="w-1/2 text-left"> 
+                <h1 class="text-7xl text-white tracking-tighter mb-4">Hello, <%= user.name %></h1>
+                <a class="bg-red-500 p-3 rounded-md text-white h-[50px] absolute top-8 right-7" href="/logout">logout</a>
+                <p class="text-white text-xl mb-10">you can create new posts.</p>
+                
+                <form action="/post" method="post">
+                    <div class="flex flex-col gap-2 mb-20 w-full">
+                        <textarea 
+                            class="w-full h-[80px] border border-zinc-600 outline-none resize-none text-white rounded-md p-3" 
+                            placeholder="What's on your mind"
+                            name="content"
+                        ></textarea>
+                        <button class="p-2 bg-blue-500 rounded-md text-white self-end w-1/4 cursor-pointer">Create New Post</button>
+                    </div>
+                </form>
+        
+                <div class="flex gap-2 flex-col">
+                    <% if(user.posts.reverse().length > 0) { %>
+                        <% user.posts.forEach((e)=>{ %>
+                            <div class="w-full h-auto flex flex-col items-center"> 
+                                <div class="bg-zinc-700 p-6 rounded-lg shadow-sm w-full">
+                                    <a class="text-blue-500 font-medium mb-10 cursor-pointer tracking-tighter"> @<%= user.username %> </a>
+                                    <p class="text-white mt-9 mb-12 tracking-tighter"> <%= e.content %> </p>
+                                    <div class="flex space-x-8 text-gray-600">
+                                        <a href="#" class="hover:text-blue-500 hover:underline text-blue-500">Like</a>
+                                        <a href="#" class="text-zinc-500 hover:underline text-blue-500">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else{ %>
+                        <div class="text-zinc-600">
+                            No posts available
+                        </div>
+                    <% } %>
+                    
+                </div>
+            </div>
+    </div>
+</body>
+</html>

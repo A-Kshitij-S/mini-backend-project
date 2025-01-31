@@ -15,10 +15,23 @@ app.get("/", (req, res)=>{
     res.render("index")
 }) 
 
-app.get("/profile",isLoggedIn,  (req, res)=>{
-    console.log(req.user);
-    res.render("profile")
+app.get("/profile",isLoggedIn, async (req, res)=>{
+    const user= await userModel.findOne({email : req.user.email}).populate("posts") 
     
+    res.render("profile", {user})
+    
+}) 
+
+app.post("/post",isLoggedIn, async (req, res)=>{
+    const user= await userModel.findOne({email : req.user.email})
+    const {content} = req.body
+    const userPost= await postModel.create({
+        user: user._id,
+        content
+    })
+    user.posts.push(userPost.id)
+    await user.save()
+    res.redirect("/profile")
 }) 
 
 app.post("/register", async(req, res)=>{
@@ -35,7 +48,7 @@ app.post("/register", async(req, res)=>{
             })
             const token= jwt.sign({email, userid: newUser._id}, "shhhhhh")
             res.cookie("token", token)
-            res.send("registered")
+            res.redirect("/login")
         })
     })
 })
@@ -53,8 +66,7 @@ app.post("/login", async(req, res)=>{
         if(result) {
             const token= jwt.sign({email, userid: user._id}, "shhhhhh")
             res.cookie("token", token)
-            res.send("user logged in")
-            
+            res.status(200).redirect("/profile")
         } 
         else res.redirect("/login")
     })
@@ -66,7 +78,7 @@ app.get("/logout", (req, res)=>{
 })
 
 function isLoggedIn(req, res, next){
-    if(req.cookies.token === "") res.send("you should login in first")
+    if(req.cookies.token === "") res.redirect("/login")
     else{
         const data= jwt.verify(req.cookies.token, "shhhhhh")
         req.user= data
