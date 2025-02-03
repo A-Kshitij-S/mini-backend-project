@@ -31,9 +31,11 @@
                                 <div class="bg-zinc-700 p-6 rounded-lg shadow-sm w-full">
                                     <a class="text-blue-500 font-medium mb-10 cursor-pointer tracking-tighter"> @<%= user.username %> </a>
                                     <p class="text-white mt-9 mb-12 tracking-tighter"> <%= e.content %> </p>
-                                    <div class="flex space-x-8 text-gray-600">
-                                        <a href="#" class="hover:text-blue-500 hover:underline text-blue-500">Like</a>
-                                        <a href="#" class="text-zinc-500 hover:underline text-blue-500">Edit</a>
+                                    <div class="flex gap-2 text-gray-600">
+                                        <a href="/like/<%= e._id%>" class="hover:text-blue-500 hover:underline text-blue-500">
+                                            <%= e.likes.indexOf(user._id)===-1? "like":"unlike" %></a>
+                                        <small class="text-white mr-20 flex items-center"><%= e.likes.length %> likes</small>
+                                        <a href="/edit/<%= e._id %>" class="text-zinc-500 hover:underline text-blue-500">Edit</a>
                                     </div>
                                 </div>
                             </div>

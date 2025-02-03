@@ -8,7 +8,10 @@
 </head>
 <body>
     <div class="w-full h-screen bg-zinc-900 p-10">
-        <h1 class="text-5xl text-white mb-5 tracking-tightest">Create User</h1>
+        <div class="flex justify-between">
+            <h1 class="text-5xl text-white mb-5 tracking-tightest">Create User</h1>
+            <a href="/login" class="text-xl text-blue-500 cursor-pointer mx-28 underline">login</a>
+        </div>
         <form class="text-white flex gap-3 " action="/register" method="post">
             <input type="text" placeholder="name" class="text-xl bg-zinc-700 outline-none rounded-md p-3" name="name">
             <input type="text" placeholder="username" class="text-xl bg-zinc-700 outline-none rounded-md p-3" name="username">
