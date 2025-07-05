@@ -24,9 +24,9 @@ const storage = multer.diskStorage({
             cb(null, name)
       })
     }
-  })
+})
   
-  const upload = multer({ storage: storage })
+const upload = multer({ storage: storage })
 
 app.get("/", (req, res)=>{
     res.render("index")
